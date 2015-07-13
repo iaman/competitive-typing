@@ -18,18 +18,11 @@ app.get '/css/styles.css', (req, res) ->
   res.sendFile 'styles.css', options
 
 io.on 'connection', (socket) ->
-  console.log '\n\nconnected!\n\n'
-
-
   socket.on 'quip-request', ->
     quip = quips[Math.floor(Math.random() * quips.length)].toUpperCase()
     socket.emit 'quip-response', quip
 
   socket.on 'quip-response', (msg) ->
-    console.log '\n\n'
-    console.log msg
-    console.log '\n\n'
-
     quip = quips[Math.floor(Math.random() * quips.length)].toUpperCase()
     socket.emit 'quip-response', quip
 
