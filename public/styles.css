@@ -1,0 +1,60 @@
+body {
+  background-color: #2c222c;
+  position: relative;
+}
+body,
+html {
+  box-sizing: border-box;
+  display: block;
+  height: 100%;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+}
+body,
+#socketInput {
+  color: #ffeef9;
+  font-family: Helvetica, sans-serif;
+  font-size: 36px;
+  line-height: normal;
+  text-transform: uppercase;
+}
+html {
+  background-color: #181118;
+}
+.error {
+  color: #fa9;
+}
+.success {
+  color: #af9;
+}
+#display {
+  bottom: 0;
+  display: block;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#display li {
+  display: inline;
+}
+#socketInput {
+  background: transparent;
+  border: none;
+  bottom: 0;
+  display: block;
+  left: 0;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  -webkit-appearance: none;
+}
+

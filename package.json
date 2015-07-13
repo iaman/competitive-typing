@@ -1,0 +1,36 @@
+{
+  "name": "competitive-typing",
+  "version": "0.0.1",
+  "author": "Ian O'Dea <ianodea@gmail.com>",
+  "description": "Competitive Typing Game",
+  "contributors": [
+    {
+        "name": "Ian O'Dea",
+        "email": "ianodea@gmail.com"
+    }
+  ],
+  "main": "app/server.coffee",
+  "bin": {},
+  "scripts": {
+    "start": "coffee app/server.coffee",
+    "compile-assets": "node_modules/.bin/stylus <app/client/styles.styl >public/styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iaman/competitive-typing.git"
+  },
+  "dependencies": {
+    "coffee-script": "*",
+    "connect": "~2.4.5",
+    "express": "*",
+    "nib": "*",
+    "socket.io": "*"
+  },
+  "devDependencies": {
+    "stylus": "*"
+  },
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.10"
+  }
+}

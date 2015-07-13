@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Competitive Typing Game</title>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var charCode, charCodeLower, display, doingCombos, keyCode, progress, quip, quipStart, socket, stress, stressTimer;
+
+      socket = io();
+
+      progress = 0;
+      stress = 0;
+
+      function hittinAKey (event) {
+        if (doingCombos) return;
+
+        keyCode = event.keyCode;
+
+        if (keyCode == 91 || keyCode == 17) {
+          doingCombos = true;
+          return;
+        }
+
+        event.preventDefault();
+        charCode = quip.charCodeAt(progress)
+        charCodeLower = quip.toLowerCase().charCodeAt(progress)
+
+        if (keyCode == charCode || keyCode == charCodeLower || (keyCode == 188 && charCode == 44)) {
+          onSuccess();
+        }
+        else {
+          onError();
+        }
+      }
+
+      function liftinAKey (event) {
+        keyCode = event.keyCode;
+
+        if (keyCode == 91 || keyCode == 17) doingCombos = false;
+      }
+
+      function onError () {
+        display.childNodes[progress].className = 'error';
+      }
+
+      function onFocus (e) {
+        e.target.placeholder = '';
+      }
+
+      function onLoad () {
+        var input = document.getElementById('socketInput');
+        input.onkeydown = hittinAKey;
+        input.onkeyup = liftinAKey;
+        input.onfocus = onFocus;
+        input.focus()
+
+        display = document.getElementById('display');
+        socket.on('quip-response', function (msg) {
+          progress = 0;
+          quip = msg;
+          quipStart = new Date()
+          populateDisplay(msg);
+          input.value = '';
+        });
+        socket.emit('quip-request');
+      }
+
+      function onSuccess () {
+        display.childNodes[progress].className = 'success';
+        progress++;
+
+        if (progress == quip.length) {
+          socket.emit('quip-request');
+        }
+      }
+
+      function populateDisplay (quip) {
+        var quipLength = quip.length;
+        var quipHtml = '';
+
+        for (var i = 0; i < quipLength; i++) {
+          quipHtml += '<li>' + quip[i] + '</li>';
+        }
+
+        display.innerHTML = quipHtml;
+      }
+    </script>
+  </head>
+  <body onload="onLoad()">
+    <textarea id='socketInput' type="text"></textarea>
+    <ul id="display"></ul>
+  </body>
+</html>
